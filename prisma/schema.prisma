@@ -1,0 +1,76 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Project {
+  id Int @id @default(autoincrement())
+  name String
+  description String?
+  start_date DateTime?
+  end_date DateTime?
+  status String
+  created_by String
+  created_on DateTime @default(now())
+  modified_by String
+  modified_on DateTime @updatedAt
+  is_deleted Boolean @default(false)
+  positions Position[]
+}
+
+model Position {
+  id Int @id @default(autoincrement())
+  projectId Int
+  project Project @relation(fields: [projectId], references: [id])
+  title String
+  description String?
+  role String
+  numberOfResources Int
+  start_date DateTime?
+  end_date DateTime?
+  created_by String
+  created_on DateTime @default(now())
+  modified_by String
+  modified_on DateTime @updatedAt
+  is_deleted Boolean @default(false)
+  allocations Allocation[]
+}
+
+model Resource {
+  id Int @id @default(autoincrement())
+  first_name String
+  last_name String
+  birth_date DateTime?
+  role String
+  availability String
+  cv_uri String?
+  cv_modified_on DateTime?
+  created_by String
+  created_on DateTime @default(now())
+  modified_by String
+  modified_on DateTime @updatedAt
+  is_deleted Boolean @default(false)
+  allocations Allocation[]
+}
+
+model Allocation {
+  
+  resourceId Int
+  positionId Int
+  status String
+  start_date DateTime?
+  end_date DateTime?
+  created_by String
+  created_on DateTime @default(now())
+  modified_by String
+  modified_on DateTime @updatedAt
+  is_deleted Boolean @default(false)
+  position Position @relation(fields: [positionId], references: [id])
+  resource Resource @relation(fields: [resourceId], references: [id])
+  @@id([positionId, resourceId])
+
+}
