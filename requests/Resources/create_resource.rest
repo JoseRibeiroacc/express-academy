@@ -1,0 +1,11 @@
+POST http://localhost:3001/resources
+Content-Type: application/json 
+
+{
+    "first_name" : "Recurso",
+    "last_name" : "3",
+    "role" : "admin",
+    "availability" : "busy",
+    "created_by" : "admin",
+    "modified_by" : "admin"
+}

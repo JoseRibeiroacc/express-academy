@@ -1,5 +1,5 @@
-const {PrismaPg} = require("@prisma/adapter-pg")
-const {PrismaClient} = require("../generated/prisma")
+const {PrismaPg} = require ("@prisma/adapter-pg")
+const {PrismaClient} = require ("../generated/prisma")
 const {Pool} = require("pg")
 
 const pool = new Pool ({

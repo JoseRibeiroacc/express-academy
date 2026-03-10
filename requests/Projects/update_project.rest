@@ -1,9 +1,9 @@
-PUT http://localhost:3001/projects/2
+PUT http://localhost:3001/projects/3
 Content-Type: application/json
 
 {
   "name" : "Projeto 2",
-  "status" : "atualizado",
+  "status" : "atualizado Hoje",
   "created_by" : "admin",
   "modified_by" : "admin"
 }
