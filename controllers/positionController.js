@@ -33,6 +33,26 @@ const {notDeleted, withNotDeleted, markDeleted } = require ("../utils/softDelete
          res.json(position)
     })
 
+    const getPositionAllocations = asyncHandler(async(req,res)=>{
+        const id = Number(req.params.id)
+
+        const position = await positionService.position.findFirst({
+            where: withNotDeleted({id}),
+            include : {
+                allocations : {
+                    where : notDeleted,
+                    include : {
+                        resource: true
+                    }
+                }
+            }
+        })
+        if(!position) {
+            return res.status(404).json({error: "Position not found"})
+        }
+        res.json(position.allocations)
+    })
+
     const createPosition = asyncHandler(async(req,res)=> {
         const position = await positionService.position.create({
             data: req.body
@@ -66,6 +86,7 @@ const {notDeleted, withNotDeleted, markDeleted } = require ("../utils/softDelete
     module.exports = {
         getPositions,
         getPosition,
+        getPositionAllocations,
         createPosition,
         updatePosition,
         deletePosition

@@ -34,6 +34,25 @@ const getProject = asyncHandler (async (req, res) => {
 
 })
 
+const  getProjectPositions = asyncHandler(async(req,res)=> {
+    const id = Number(req.params.id)
+    const project = await projectService.project.findFirst ({
+            where: withNotDeleted({id}),
+            include: {
+                positions : {
+                    where: notDeleted
+                }
+            }
+    })
+
+    if(!project) {
+        return res.status(404).json({error: "Project not found"})
+    }
+
+    res.json(project.positions)
+
+})
+
 const createProject = asyncHandler(async(req, res) => {
     const project = await projectService.project.create({
         data: req.body
@@ -63,6 +82,7 @@ const deleteProject = asyncHandler(async(req, res) => {
 module.exports = {
     getProjects,
     getProject,
+    getProjectPositions,
     createProject,
     updateProject,
     deleteProject
