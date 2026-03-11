@@ -1,41 +1,66 @@
 const positionService = require ("../services/positionService")
+const asyncHandler = require("../utils/asyncHandler")
+const {notDeleted, withNotDeleted, markDeleted } = require ("../utils/softDelete")
 
-    const getPositions = async(req,res) => {
-        const positions = await positionService.position.findMany()
+    const getPositions = asyncHandler(async(req,res) => {
+        const positions = await positionService.position.findMany({
+            where: withNotDeleted(),
+            include : {
+            project : true
+        }
+    })
         res.json(positions)
-    }
+    } )
 
-    const getPosition = async(req,res) => {
+    const getPosition = asyncHandler(async(req,res) => {
         const id = Number(req.params.id)
-        const position = await positionService.position.findUnique({
-            where: {id}
+        const position = await positionService.position.findFirst({
+            where: withNotDeleted(id),
+            include : {
+                project : true,
+                allocations : {
+                    where: notDeleted,
+                    include : {
+                        resource : true
+                    }
+                }
+            }
         })
-         res.json(position)
-    }
 
-    const createPosition = async(req,res)=> {
+        if(!position) {
+            return res.status(404).json({error: "Position not found"})
+        }
+         res.json(position)
+    })
+
+    const createPosition = asyncHandler(async(req,res)=> {
         const position = await positionService.position.create({
             data: req.body
                })
         res.status(201).json(position)
-    }
+        
+    } )
 
-    const updatePosition = async(req, res) => {
+
+    const updatePosition = asyncHandler(async(req, res) => {
+
         const id = Number(req.params.id)
-        const project = await positionService.position.update({
+        const position  = await positionService.position.update({
             where: {id},
             data: req.body
         })
-        res.json(project)
-    }
+        res.json(position)
+        
+    })
 
-    const deletePosition = async(req,res) => {
+    const deletePosition = asyncHandler(async(req,res) => {
         const id = Number(req.params.id)
-        await positionService.position.delete({
-            where: {id}
+        await positionService.position.update({
+            where: {id} ,
+            data : markDeleted
         })
-        res.status(204).end()
-    }
+        res.status(204).end()       
+    } )
 
 
     module.exports = {

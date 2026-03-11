@@ -1,0 +1,10 @@
+POST http://localhost:3001/allocations
+Content-Type: application/json
+
+{
+    "positionId" : 1,
+    "resourceId" : 3,
+    "status" : "defined",
+    "created_by" : "admin",
+    "modified_by" : "admin"
+}

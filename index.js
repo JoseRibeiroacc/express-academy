@@ -5,6 +5,7 @@ const logger = require('./utils/logger')
 const projectsRouter = require ("./routes/projects")
 const resourcesRouter = require ("./routes/resources")
 const positionRouter = require ("./routes/positions")
+const allocationsRouter = require ("./routes/allocations")
 const {unknownEndpoint, errorHandler } = require ("./utils/middleware")
 
 const app = express();
@@ -19,6 +20,7 @@ app.get('/', (request, response) => {
 app.use("/projects", projectsRouter)
 app.use("/resources", resourcesRouter)
 app.use("/positions", positionRouter)
+app.use("/allocations", allocationsRouter)
 
 app.use(unknownEndpoint)
 app.use(errorHandler)

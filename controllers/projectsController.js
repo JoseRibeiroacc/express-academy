@@ -1,42 +1,64 @@
 const projectService = require("../services/projectService")
+const asyncHandler = require("../utils/asyncHandler")
+const {notDeleted, withNotDeleted, markDeleted} = require ("../utils/softDelete")
 
-const getProjects = async (req, res) => {
-    const projects = await projectService.project.findMany()
-    res.json(projects)
-} 
+const getProjects = asyncHandler(async (req, res) => {
 
-const getProject = async (req, res) => {
-    const id = Number(req.params.id)
-    const project = await projectService.project.findUnique({
-        where : {id}
+    const projects = await projectService.project.findMany({
+        where: withNotDeleted(),
+        include: {
+            positions: {
+                where: notDeleted
+            }
+        }
     })
+    res.json(projects)
+    
+} )
+
+
+const getProject = asyncHandler (async (req, res) => {
+    const id = Number(req.params.id)
+    const project = await projectService.project.findFirst({
+        where : withNotDeleted ({id}),
+        include : {
+            positions: {
+                where : notDeleted
+            }
+        }
+    })
+    if(!project) {
+        return res.status(404).json({error: "Project not found"})
+    }
     res.json(project)
 
-}
+})
 
-const createProject = async(req, res) => {
+const createProject = asyncHandler(async(req, res) => {
     const project = await projectService.project.create({
         data: req.body
     })
     res.status(201).json(project)
-}
 
-const updateProject = async(req,res) => {
+})
+
+const updateProject = asyncHandler(async(req,res) => {
     const id = Number(req.params.id)
     const project = await projectService.project.update({
         where: {id},
         data: req.body
     })
     res.json(project)
-}
+})
 
-const deleteProject = async(req, res) => {
+const deleteProject = asyncHandler(async(req, res) => {
     const id = Number(req.params.id)
-    await projectService.project.delete({
-        where: {id}
+    await projectService.project.update({
+        where: {id} ,
+        data: markDeleted
     })
     res.status(204).end()
-}
+} )
 
 module.exports = {
     getProjects,
