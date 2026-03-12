@@ -1,9 +1,11 @@
-PUT http://localhost:3001/projects/3
+PUT http://localhost:3001/projects/9
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJqb3NlIiwicm9sZSI6InVzZXIiLCJpYXQiOjE3NzMzMzg5NjYsImV4cCI6MTc3MzM0MjU2Nn0.CF2WzcITjWWiere2WFyiS6grIg-xpoOiPvbdGUyLiGY
 
 {
-  "name" : "Projeto 2",
-  "status" : "atualizado Hoje",
-  "created_by" : "admin",
-  "modified_by" : "admin"
+  "name" : "Projeto 9",
+  "description" : "TESTE sucesso",
+  "status" : "active",
+  "created_by" : "user",
+  "modified_by" : "user"
 }

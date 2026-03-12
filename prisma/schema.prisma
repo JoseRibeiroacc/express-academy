@@ -7,6 +7,23 @@ datasource db {
   provider = "postgresql"
 }
 
+enum UserRole {
+  user
+  admin
+}
+
+model User {
+  id Int @id @default(autoincrement())
+  username String @unique
+  password String
+  role UserRole @default(user)
+  firstName String?
+  lastName String?
+  created_on DateTime @default(now())
+  modified_on DateTime @updatedAt
+  is_deleted Boolean @default(false)
+}
+
 model Project {
   id Int @id @default(autoincrement())
   name String

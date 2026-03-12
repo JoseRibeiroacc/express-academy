@@ -1,9 +1,9 @@
-const positionService = require ("../services/positionService")
+const prisma = require ("../services/prismaService")
 const asyncHandler = require("../utils/asyncHandler")
 const {notDeleted, withNotDeleted, markDeleted } = require ("../utils/softDelete")
 
     const getPositions = asyncHandler(async(req,res) => {
-        const positions = await positionService.position.findMany({
+        const positions = await prisma.position.findMany({
             where: withNotDeleted(),
             include : {
             project : true
@@ -14,7 +14,7 @@ const {notDeleted, withNotDeleted, markDeleted } = require ("../utils/softDelete
 
     const getPosition = asyncHandler(async(req,res) => {
         const id = Number(req.params.id)
-        const position = await positionService.position.findFirst({
+        const position = await prisma.position.findFirst({
             where: withNotDeleted(id),
             include : {
                 project : true,
@@ -36,7 +36,7 @@ const {notDeleted, withNotDeleted, markDeleted } = require ("../utils/softDelete
     const getPositionAllocations = asyncHandler(async(req,res)=>{
         const id = Number(req.params.id)
 
-        const position = await positionService.position.findFirst({
+        const position = await prisma.position.findFirst({
             where: withNotDeleted({id}),
             include : {
                 allocations : {
@@ -54,7 +54,7 @@ const {notDeleted, withNotDeleted, markDeleted } = require ("../utils/softDelete
     })
 
     const createPosition = asyncHandler(async(req,res)=> {
-        const position = await positionService.position.create({
+        const position = await prisma.position.create({
             data: req.body
                })
         res.status(201).json(position)
@@ -65,7 +65,7 @@ const {notDeleted, withNotDeleted, markDeleted } = require ("../utils/softDelete
     const updatePosition = asyncHandler(async(req, res) => {
 
         const id = Number(req.params.id)
-        const position  = await positionService.position.update({
+        const position  = await prisma.position.update({
             where: {id},
             data: req.body
         })
@@ -75,7 +75,7 @@ const {notDeleted, withNotDeleted, markDeleted } = require ("../utils/softDelete
 
     const deletePosition = asyncHandler(async(req,res) => {
         const id = Number(req.params.id)
-        await positionService.position.update({
+        await prisma.position.update({
             where: {id} ,
             data : markDeleted
         })

@@ -1,9 +1,9 @@
-const resourceService = require("../services/resourceService")
+const prisma = require("../services/prismaService")
 const asyncHandler = require("../utils/asyncHandler")
 const {notDeleted, withNotDeleted, markDeleted} = require ("../utils/softDelete")
 
 const getResources = asyncHandler(async(req, res) => {
-    const resources = await resourceService.resource.findMany({
+    const resources = await prisma.resource.findMany({
         where: withNotDeleted(),
         include : {
             allocations: {
@@ -16,7 +16,7 @@ const getResources = asyncHandler(async(req, res) => {
 
 const getResource = asyncHandler(async(req,res) => {
     const id = Number(req.params.id)
-    const resource = await resourceService.resource.findFirst({
+    const resource = await prisma.resource.findFirst({
         where: withNotDeleted({id}),
      include : {
         allocations : {
@@ -34,7 +34,7 @@ const getResource = asyncHandler(async(req,res) => {
 })
 
 const createResource = asyncHandler(async(req,res) => {
-    const resource = await resourceService.resource.create({
+    const resource = await prisma.resource.create({
         data: req.body
     })
     res.status(201).json(resource)
@@ -44,7 +44,7 @@ const createResource = asyncHandler(async(req,res) => {
 const updateResource = asyncHandler(async(req,res) => {
 
     const id = Number(req.params.id)
-    const resource = await resourceService.resource.update({
+    const resource = await prisma.resource.update({
         where: {id},
         data: req.body
     })
@@ -55,7 +55,7 @@ const updateResource = asyncHandler(async(req,res) => {
 const deleteResource = asyncHandler(async(req, res) => {
 
     const id = Number(req.params.id)
-    await resourceService.resource.update({
+    await prisma.resource.update({
         where: {id} ,
         data : markDeleted
     })

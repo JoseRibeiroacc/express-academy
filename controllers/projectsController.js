@@ -1,10 +1,10 @@
-const projectService = require("../services/projectService")
+const prisma = require("../services/prismaService")
 const asyncHandler = require("../utils/asyncHandler")
 const {notDeleted, withNotDeleted, markDeleted} = require ("../utils/softDelete")
 
 const getProjects = asyncHandler(async (req, res) => {
 
-    const projects = await projectService.project.findMany({
+    const projects = await prisma.project.findMany({
         where: withNotDeleted(),
         include: {
             positions: {
@@ -19,7 +19,7 @@ const getProjects = asyncHandler(async (req, res) => {
 
 const getProject = asyncHandler (async (req, res) => {
     const id = Number(req.params.id)
-    const project = await projectService.project.findFirst({
+    const project = await prisma.project.findFirst({
         where : withNotDeleted ({id}),
         include : {
             positions: {
@@ -36,7 +36,7 @@ const getProject = asyncHandler (async (req, res) => {
 
 const  getProjectPositions = asyncHandler(async(req,res)=> {
     const id = Number(req.params.id)
-    const project = await projectService.project.findFirst ({
+    const project = await prisma.project.findFirst ({
             where: withNotDeleted({id}),
             include: {
                 positions : {
@@ -54,7 +54,7 @@ const  getProjectPositions = asyncHandler(async(req,res)=> {
 })
 
 const createProject = asyncHandler(async(req, res) => {
-    const project = await projectService.project.create({
+    const project = await prisma.project.create({
         data: req.body
     })
     res.status(201).json(project)
@@ -63,7 +63,7 @@ const createProject = asyncHandler(async(req, res) => {
 
 const updateProject = asyncHandler(async(req,res) => {
     const id = Number(req.params.id)
-    const project = await projectService.project.update({
+    const project = await prisma.project.update({
         where: {id},
         data: req.body
     })
@@ -72,7 +72,7 @@ const updateProject = asyncHandler(async(req,res) => {
 
 const deleteProject = asyncHandler(async(req, res) => {
     const id = Number(req.params.id)
-    await projectService.project.update({
+    await prisma.project.update({
         where: {id} ,
         data: markDeleted
     })

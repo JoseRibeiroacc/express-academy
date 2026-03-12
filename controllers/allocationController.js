@@ -1,9 +1,9 @@
-const allocationService = require("../services/allocationService")
+const prisma = require("../services/prismaService")
 const {notDeleted, withNotDeleted, markDeleted} = require ("../utils/softDelete")
 const asyncHandler = require("../utils/asyncHandler")
 
 const getAllocations = asyncHandler(async(req, res) => {
-    const allocations = await allocationService.allocation.findMany({
+    const allocations = await prisma.allocation.findMany({
         where : withNotDeleted(),
         include : {
             position: true,
@@ -17,7 +17,7 @@ const getAllocation = asyncHandler(async(req,res) => {
         const positionId = Number(req.params.positionId)
         const resourceId = Number(req.params.resourceId)
 
-        const allocation = await allocationService.allocation.findFirst({
+        const allocation = await prisma.allocation.findFirst({
             where : withNotDeleted({
                     positionId,
                     resourceId
@@ -36,7 +36,7 @@ const getAllocation = asyncHandler(async(req,res) => {
 })
 
       const createAllocation = asyncHandler(async(req,res)=> {
-        const allocation = await allocationService.allocation.create({
+        const allocation = await prisma.allocation.create({
             data: req.body
                })
         res.status(201).json(allocation)
@@ -46,7 +46,7 @@ const getAllocation = asyncHandler(async(req,res) => {
         const positionId = Number(req.params.positionId)
         const resourceId = Number(req.params.resourceId)
 
-        const allocation = await allocationService.allocation.update({
+        const allocation = await prisma.allocation.update({
             where : {
                 positionId_resourceId : {
                     positionId,
@@ -63,7 +63,7 @@ const getAllocation = asyncHandler(async(req,res) => {
         const positionId = Number(req.params.positionId)
         const resourceId = Number(req.params.resourceId)
 
-        await allocationService.allocation.update({
+        await prisma.allocation.update({
             where: {
                 positionId_resourceId: {
                     positionId,
