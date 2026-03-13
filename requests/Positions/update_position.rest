@@ -1,11 +1,11 @@
-PUT http://localhost:3001/positions/2
+PUT http://localhost:3001/positions/1
 Content-Type: application/json
 
 {
     "title" : "Posicao 2",
     "projectId" : 2,
     "role"  : "admin",
-    "numberOfResources" : 10,
+    "numberOfResources" : 100,
     "created_by" : "admin",
     "modified_by" : "admin"
 

@@ -1,10 +1,10 @@
 POST http://localhost:3001/projects
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJqb3NlIiwicm9sZSI6InVzZXIiLCJpYXQiOjE3NzMzMzg5NjYsImV4cCI6MTc3MzM0MjU2Nn0.CF2WzcITjWWiere2WFyiS6grIg-xpoOiPvbdGUyLiGY
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJqb3NlIiwicm9sZSI6InVzZXIiLCJpYXQiOjE3NzM0MTc0NTUsImV4cCI6MTc3MzQyMTA1NX0.L3wApoAQvrX7cAQydFtYNlCSgksckkJRgY7exDrB-t8
 
 {
-  "name" : "Projeto 9",
-  "description" : "TESTE",
+  "name" : "Projeto ap",
+  "description" : "TESTEES",
   "status" : "active",
   "created_by" : "admin",
   "modified_by" : "admin"
