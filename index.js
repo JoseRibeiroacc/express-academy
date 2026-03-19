@@ -10,11 +10,15 @@ const authRouter = require("./routes/auth")
 const { unknownEndpoint, errorHandler } = require("./utils/middleware")
 
 const app = express()
+const cors = require("cors")
 
+app.use(cors())
 app.use(express.json())
+app.use(express.static("public"))
 
 app.get("/", (request, response) => {
   response.send("<h1> Express Academy </h1>")
+  
 })
 
 app.use("/auth", authRouter)

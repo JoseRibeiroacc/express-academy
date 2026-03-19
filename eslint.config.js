@@ -21,5 +21,11 @@ module.exports = [
       "@stylistic/quotes": ["error", "double"],
       "@stylistic/indent": ["error", 2]
     }
+  },
+  {
+    files: ["public/**/*.js"],
+    languageOptions : {
+      ...globals.browser
+    }
   }
 ]
