@@ -6,13 +6,13 @@ import {
 } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-remote-config.js"
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCQP8BFh-BOrOzg-5IuvK0IITqBUc4bOUc",
-  authDomain: "node-56864.firebaseapp.com",
-  projectId: "node-56864",
-  storageBucket: "node-56864.firebasestorage.app",
-  messagingSenderId: "421481354662",
-  appId: "1:421481354662:web:6e2f4e8021effa4b11eb67",
-  measurementId: "G-GPHP0MYJY4"
+  apiKey: "your_info",
+  authDomain: "your_info",
+  projectId: "your-info",
+  storageBucket: "your-info",
+  messagingSenderId: "your-info",
+  appId: "your-info",
+  measurementId: "your-info"
 }
 
 const app = initializeApp(firebaseConfig)
